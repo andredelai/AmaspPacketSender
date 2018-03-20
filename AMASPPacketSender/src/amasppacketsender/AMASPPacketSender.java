@@ -20,10 +20,16 @@ public class AMASPPacketSender extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
+        Parent setup = FXMLLoader.load(getClass().getResource("FXMLSerialCom.fxml"));
+        
+        FXMLSerialComController serialSetup = new FXMLSerialComController();
+        
+        serialSetup.initialize(null, null);
         
         Scene scene = new Scene(root);
+        Scene scene2 = new Scene(setup);
         
-        stage.setScene(scene);
+        stage.setScene(scene2);
         stage.show();
     }
 

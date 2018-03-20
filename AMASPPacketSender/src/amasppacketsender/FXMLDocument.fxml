@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -34,12 +35,8 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Close" />
-                        </items>
-                      </Menu>
-                      <Menu mnemonicParsing="false" text="Edit">
-                        <items>
-                          <MenuItem mnemonicParsing="false" text="Delete" />
+                          <MenuItem mnemonicParsing="false" text="Connect" />
+                              <MenuItem mnemonicParsing="false" text="Exit" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Help">
@@ -117,7 +114,7 @@
                                                 <AnchorPane prefHeight="85.0" prefWidth="400.0" GridPane.rowIndex="1">
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="29.0" text="Device ID" AnchorPane.leftAnchor="14.0" />
-                                                      <Label layoutX="16.0" layoutY="62.0" text="Message" AnchorPane.leftAnchor="16.0" />
+                                                      <Label layoutX="16.0" layoutY="62.0" text="Message" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="16.0" />
                                                       <TextField layoutX="78.0" layoutY="58.0" prefHeight="25.0" prefWidth="321.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="14.0" prefHeight="17.0" prefWidth="147.0" text="Request Packet (MRP)" AnchorPane.leftAnchor="14.0" />
                                                       <Button defaultButton="true" layoutX="334.0" layoutY="24.0" mnemonicParsing="false" text="SEND" AnchorPane.rightAnchor="5.0" />
@@ -163,10 +160,10 @@
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Response Packet (SRP)" AnchorPane.leftAnchor="14.0" />
-                                                      <Label layoutX="14.0" layoutY="40.0" text="Device ID" AnchorPane.leftAnchor="14.0" />
+                                                      <Label layoutX="14.0" layoutY="49.0" text="Device ID" AnchorPane.leftAnchor="14.0" />
                                                       <Button defaultButton="true" layoutX="332.0" layoutY="36.0" mnemonicParsing="false" text="SEND" AnchorPane.rightAnchor="5.0" />
-                                                      <Spinner editable="true" layoutX="77.0" layoutY="36.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="77.0" />
-                                                      <Label layoutX="16.0" layoutY="71.0" text="Message" AnchorPane.leftAnchor="14.0" />
+                                                      <Spinner editable="true" layoutX="77.0" layoutY="45.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="77.0" />
+                                                      <Label layoutX="16.0" layoutY="71.0" text="Message" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
                                                       <TextField layoutX="77.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="5.0" />
                                                    </children>
                                                 </AnchorPane>
@@ -174,9 +171,9 @@
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (SRP)" AnchorPane.leftAnchor="14.0" />
                                                       <Label layoutX="14.0" layoutY="43.0" text="Device ID" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <Spinner editable="true" layoutX="76.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="77.0" />
+                                                      <Spinner editable="true" layoutX="76.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" />
                                                       <Label layoutX="234.0" layoutY="43.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
-                                                      <Spinner editable="true" layoutX="300.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Spinner editable="true" layoutX="300.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                                       <Button defaultButton="true" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" text="SEND" AnchorPane.rightAnchor="5.0" />
                                                    </children>
                                                 </AnchorPane>
@@ -184,7 +181,7 @@
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Interrupt Packet (SIP)" AnchorPane.leftAnchor="14.0" />
                                                       <Label layoutX="16.0" layoutY="40.0" text="Device ID" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <Spinner editable="true" layoutX="300.0" layoutY="36.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="300.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Spinner editable="true" layoutX="300.0" layoutY="36.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="200.0" layoutY="40.0" text="Interruption Code" />
                                                       <Spinner editable="true" layoutX="77.0" layoutY="36.0" prefHeight="17.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" />
                                                       <Button defaultButton="true" layoutX="348.0" layoutY="7.0" mnemonicParsing="false" text="SEND" AnchorPane.rightAnchor="6.0" />
@@ -257,7 +254,18 @@
                                                       </Label>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1" />
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <TextField editable="false" layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="76.0" />
+                                                      <TextField editable="false" layoutX="14.0" layoutY="82.0" prefHeight="25.0" prefWidth="76.0" />
+                                                      <TextField editable="false" layoutX="14.0" layoutY="135.0" prefHeight="25.0" prefWidth="76.0" />
+                                                      <TextField editable="false" layoutX="11.0" layoutY="198.0" prefHeight="25.0" prefWidth="377.0" />
+                                                      <Label layoutX="14.0" layoutY="14.0" text="Packet Type" />
+                                                      <Label layoutX="14.0" layoutY="65.0" text="Device ID" />
+                                                      <Label layoutX="14.0" layoutY="119.0" text="Code / Length" />
+                                                      <Label layoutX="16.0" layoutY="172.0" text="Message" />
+                                                      <ChoiceBox layoutX="202.0" layoutY="82.0" prefWidth="150.0" />
+                                                   </children></AnchorPane>
                                              </children>
                                           </GridPane>
                                        </children>
