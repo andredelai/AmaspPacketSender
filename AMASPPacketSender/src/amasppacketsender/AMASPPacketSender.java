@@ -7,9 +7,11 @@ package amasppacketsender;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -19,15 +21,20 @@ public class AMASPPacketSender extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        Parent setup = FXMLLoader.load(getClass().getResource("FXMLSerialCom.fxml"));
-            
-        Scene scene = new Scene(root);
-        Scene scene2 = new Scene(setup);
+        Parent root = FXMLLoader.load(getClass().getResource("FXMLMainWindow.fxml"));
         
-        stage.setScene(scene2);
+        Scene scene = new Scene(root);
+        
+        stage.setScene(scene);
+        stage.setMaxHeight(650);
+        stage.setMaxWidth(850);
+        stage.setMinHeight(650);
+        stage.setMinWidth(850);
+        stage.setTitle("AMASP Packet Sender 1.0");
         stage.show();
+        
     }
+
 
     /**
      * @param args the command line arguments
