@@ -6,6 +6,7 @@
 package amasppacketsender;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,8 @@ import javafx.stage.Stage;
 public class AMASPPacketSender extends Application {
     
     private Stage stage2;
+    
+    //@FXML
     private MainController mainCtrl;
     
     @Override
@@ -47,7 +50,11 @@ public class AMASPPacketSender extends Application {
         stage2.initModality(Modality.WINDOW_MODAL);
         
         mainCtrl = new MainController();
+        
+        mainCtrl.nothing();
+        
         mainCtrl.initialize(stage, stage2);
+        mainCtrl.setStatusLabel("TESTE");
         
         stage.show();     
     }

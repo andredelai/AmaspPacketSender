@@ -5,13 +5,11 @@
  */
 package amasppacketsender;
 
-import com.fazecast.jSerialComm.SerialPort;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import com.fazecast.jSerialComm.SerialPort;
@@ -60,9 +58,8 @@ public class FXMLMainWindowController implements Initializable {
         
     }
     
-    public void init(MainController mainController, SerialPort serialCom) {
+    public void init(MainController mainController) {
 	main = mainController;
-        this.serialCom = serialCom;
     }
     
     public void setStatusLabel(String status)

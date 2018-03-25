@@ -15,6 +15,20 @@ import com.fazecast.jSerialComm.SerialPort;
  */
 public class MainController
 {
+
+    /**
+     * @return the serialCom
+     */
+    public SerialPort getSerialCom() {
+        return serialCom;
+    }
+
+    /**
+     * @param serialCom the serialCom to set
+     */
+    public void setSerialCom(SerialPort serialCom) {
+        this.serialCom = serialCom;
+    }
     private Stage stage1, stage2;
     private SerialPort serialCom;
       
@@ -25,11 +39,13 @@ public class MainController
     FXMLSerialComController serialComCtrl;
     
     
+    @FXML
     public void initialize(Stage stage1, Stage stage2)
     {
-        serialCom = null;
-        mainWindowCtrl.init(this, serialCom);
-        serialComCtrl.init(this, serialCom);
+        mainWindowCtrl = new FXMLMainWindowController();
+        serialComCtrl = new FXMLSerialComController();
+        mainWindowCtrl.init(this);
+        serialComCtrl.init(this);
         this.stage1 = stage1;
         this.stage2 = stage2;
     }
@@ -49,9 +65,17 @@ public class MainController
         stage2.hide();
     }
     
+    @FXML
     public void setStatusLabel(String status)
     {
         mainWindowCtrl.setStatusLabel(status);
+    }
+    
+    public void nothing()
+    {
+        int x;
+        x = 10; 
+    
     }
     
     

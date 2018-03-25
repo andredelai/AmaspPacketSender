@@ -23,7 +23,6 @@ import com.fazecast.jSerialComm.SerialPort;
 public class FXMLSerialComController implements Initializable { 
     
     private MainController main;
-    SerialPort serialCom;
     
     @FXML
     private ChoiceBox cBoxSerialPorts;
@@ -73,8 +72,7 @@ public class FXMLSerialComController implements Initializable {
         
     }
     
-    public void init(MainController mainController, SerialPort serialCom) {
+    public void init(MainController mainController) {
 	main = mainController;
-        this.serialCom = serialCom;
     }
 }
