@@ -14,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import com.fazecast.jSerialComm.SerialPort;
+import javafx.event.ActionEvent;
 
 /**
  * FXML Controller class
@@ -22,7 +23,7 @@ import com.fazecast.jSerialComm.SerialPort;
  */
 public class FXMLSerialComController implements Initializable { 
     
-    private MainController main;
+    private AMASPPacketSender main;
     
     @FXML
     private ChoiceBox cBoxSerialPorts;
@@ -56,9 +57,13 @@ public class FXMLSerialComController implements Initializable {
         StopBitsList.addAll("1", "2");
         
         cBoxBaudRate.setItems(BaudRateList);
+        cBoxBaudRate.setValue("9600");
         cBoxParity.setItems(ParityList);
+        cBoxParity.setValue("None");
         cBoxDataBits.setItems(DataBitsList);
+        cBoxDataBits.setValue("8");
         cBoxStopBits.setItems(StopBitsList);
+        cBoxStopBits.setValue("1");
         
         
         SerialPort[] ports = SerialPort.getCommPorts();
@@ -68,11 +73,19 @@ public class FXMLSerialComController implements Initializable {
         }
         
         cBoxSerialPorts.setItems(PortList);
-        
+        cBoxSerialPorts.setValue(ports[0].getSystemPortName());
         
     }
     
-    public void init(MainController mainController) {
+    public void init(AMASPPacketSender mainController) {
 	main = mainController;
+    }
+    
+    public void handleBtonCancelAction(ActionEvent event) {
+        main.hideSerialConf();
+    }
+    
+    public void handleBtonConnectAction(ActionEvent event) {
+        main.hideSerialConf();
     }
 }

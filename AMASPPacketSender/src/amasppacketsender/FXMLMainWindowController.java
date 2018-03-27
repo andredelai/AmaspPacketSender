@@ -18,11 +18,12 @@ import javafx.scene.control.Label;
  *
  * @author delai
  */
+
 public class FXMLMainWindowController implements Initializable {
 
       
     
-    private MainController main;
+    private AMASPPacketSender main;
     private SerialPort serialCom;
     
     @FXML
@@ -39,6 +40,7 @@ public class FXMLMainWindowController implements Initializable {
     
     @FXML
     private Label lbelStatus;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,7 +60,7 @@ public class FXMLMainWindowController implements Initializable {
         
     }
     
-    public void init(MainController mainController) {
+    public void init(AMASPPacketSender mainController) {
 	main = mainController;
     }
     

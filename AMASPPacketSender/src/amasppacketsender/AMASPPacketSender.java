@@ -10,8 +10,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -19,18 +21,29 @@ import javafx.stage.Stage;
  */
 public class AMASPPacketSender extends Application {
     
+    private Stage stage;
     private Stage stage2;
-    
-    //@FXML
-    private MainController mainCtrl;
-    
+            
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMainWindow.fxml"));
-        Parent node1 = FXMLLoader.load(getClass().getResource("FXMLSerialCom.fxml"));
         
-        Scene scene = new Scene(root);
-        Scene scene2 = new Scene(node1);
+        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("FXMLMainWindow.fxml"));
+        FXMLLoader loader2 = new FXMLLoader(getClass().getResource("FXMLSerialCom.fxml"));
+        
+        FXMLMainWindowController mainWindowCtrl = new FXMLMainWindowController();
+        FXMLSerialComController serialComCtrl = new FXMLSerialComController();
+        
+        mainWindowCtrl.init(this);
+        serialComCtrl.init(this);
+        
+        loader1.setController(mainWindowCtrl);
+        loader2.setController(serialComCtrl);      
+        
+        Parent main = loader1.load();
+        Parent serialConf = loader2.load();
+        
+        Scene scene = new Scene(main);
+        Scene scene2 = new Scene(serialConf);
         
         stage.setScene(scene);
         stage.setMaxHeight(650);
@@ -41,22 +54,18 @@ public class AMASPPacketSender extends Application {
         
         stage2 = new Stage();
         stage2.setScene(scene2);
-        stage2.setMaxHeight(650);
-        stage2.setMaxWidth(850);
-        stage2.setMinHeight(650);
-        stage2.setMinWidth(850);
-        stage2.setTitle("Serial Connection Configuration");
+        stage2.setMaxHeight(170);
+        stage2.setMaxWidth(573);
+        stage2.setMinHeight(170);
+        stage2.setMinWidth(573);
         stage2.initOwner(stage);
         stage2.initModality(Modality.WINDOW_MODAL);
-        
-        mainCtrl = new MainController();
-        
-        mainCtrl.nothing();
-        
-        mainCtrl.initialize(stage, stage2);
-        mainCtrl.setStatusLabel("TESTE");
-        
-        stage.show();     
+        stage2.initStyle(StageStyle.UNDECORATED);
+        //stage2.setTitle("Serial Connection Configuration");
+        stage2.initOwner(stage);
+        stage2.initModality(Modality.WINDOW_MODAL);   
+              
+        stage.show(); //shows stage     
     }
 
     /**
@@ -67,6 +76,19 @@ public class AMASPPacketSender extends Application {
         
     }
     
+    public void exitProgram()
+    {
+        stage.close();
+    }
     
+    public void hideSerialConf()
+    {
+        stage2.hide();
+    }
+    
+    public void showSerialConf()
+    {
+        stage2.show();
+    }
     
 }
