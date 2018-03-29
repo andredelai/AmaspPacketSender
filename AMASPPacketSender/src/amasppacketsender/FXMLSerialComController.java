@@ -24,6 +24,7 @@ import javafx.event.ActionEvent;
 public class FXMLSerialComController implements Initializable { 
     
     private AMASPPacketSender main;
+    SerialPort[] ports;
     
     @FXML
     private ChoiceBox cBoxSerialPorts;
@@ -66,7 +67,7 @@ public class FXMLSerialComController implements Initializable {
         cBoxStopBits.setValue("1");
         
         
-        SerialPort[] ports = SerialPort.getCommPorts();
+        ports = SerialPort.getCommPorts();
         for(int i = 0; i< ports.length; i++)
         {
             PortList.add(ports[i].getSystemPortName());
@@ -86,6 +87,13 @@ public class FXMLSerialComController implements Initializable {
     }
     
     public void handleBtonConnectAction(ActionEvent event) {
+        
+        int aux;
+        cBoxSerialPorts.getSelectionModel().getSelectedIndex();
+        if(!cBoxSerialPorts.getItems().isEmpty())
+        {
+            main.setSerialConfig(ports[cBoxSerialPorts.getSelectionModel().getSelectedIndex()], Integer.parseInt((String)cBoxBaudRate.getValue()), cBoxParity.getSelectionModel().getSelectedIndex(), Integer.parseInt((String)cBoxDataBits.getValue()), Integer.parseInt((String)cBoxStopBits.getValue()));
+        } 
         main.hideSerialConf();
     }
 }

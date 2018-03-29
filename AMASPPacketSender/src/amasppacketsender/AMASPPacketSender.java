@@ -5,6 +5,7 @@
  */
 package amasppacketsender;
 
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,9 @@ public class AMASPPacketSender extends Application {
     
     private Stage stage;
     private Stage stage2;
+    private SerialPort serialCom;
+    private FXMLMainWindowController mainWindowCtrl;
+    private FXMLSerialComController serialComCtrl;
             
     @Override
     public void start(Stage stage) throws Exception {
@@ -30,8 +34,8 @@ public class AMASPPacketSender extends Application {
         FXMLLoader loader1 = new FXMLLoader(getClass().getResource("FXMLMainWindow.fxml"));
         FXMLLoader loader2 = new FXMLLoader(getClass().getResource("FXMLSerialCom.fxml"));
         
-        FXMLMainWindowController mainWindowCtrl = new FXMLMainWindowController();
-        FXMLSerialComController serialComCtrl = new FXMLSerialComController();
+        mainWindowCtrl = new FXMLMainWindowController();
+        serialComCtrl = new FXMLSerialComController();
         
         mainWindowCtrl.init(this);
         serialComCtrl.init(this);
@@ -89,6 +93,47 @@ public class AMASPPacketSender extends Application {
     public void showSerialConf()
     {
         stage2.show();
+    }
+    
+    public void setSerialConfig(SerialPort port, int baudRate, int parity, int dataBits, int stopBits )
+    {
+        String aux = " ";
+        
+        serialCom = port;
+        serialCom.setBaudRate(baudRate);
+        serialCom.setParity(parity);
+        serialCom.setNumDataBits(dataBits);
+        serialCom.setNumStopBits(stopBits);
+        boolean openPort = serialCom.openPort();
+        
+        
+        switch(serialCom.getParity())
+        {
+            case 0:
+                aux = "None";
+                break;
+            case 1:
+                aux = "Odd";
+                break;
+            case 2:
+                aux = "Even";
+                break;
+        }
+        
+        mainWindowCtrl.setStatusLabel(serialCom.getSystemPortName() + " " + serialCom.getBaudRate() + " " + serialCom.getNumDataBits() + " " + aux + " " + serialCom.getNumStopBits());
+        mainWindowCtrl.setConMenuItemText("Disconnect");
+        mainWindowCtrl.enableAllFields(true);
+    }
+    
+    public void disconnectSerial()
+    {
+        if(serialCom != null)
+        {
+            serialCom.closePort();
+        }
+         mainWindowCtrl.setStatusLabel("No connection");
+         mainWindowCtrl.setConMenuItemText("Connect");
+         mainWindowCtrl.enableAllFields(false);
     }
     
 }

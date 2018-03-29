@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 /**
  *
  * @author delai
@@ -24,7 +25,6 @@ public class FXMLMainWindowController implements Initializable {
       
     
     private AMASPPacketSender main;
-    private SerialPort serialCom;
     
     @FXML
     private AnchorPane aPneSendRec;
@@ -39,19 +39,37 @@ public class FXMLMainWindowController implements Initializable {
     private AnchorPane gPneMaster;
     
     @FXML
+    private AnchorPane aPneSender;
+    
+    @FXML
+    private AnchorPane aPneReceiver;
+    
+    @FXML
     private Label lbelStatus;
+    
+    @FXML
+    private MenuItem mIteFileConnect;
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        aPneSendRec.disableProperty();
+        
         aPneSendRec.setDisable(true);
+        aPneSender.setDisable(false);
+        aPneReceiver.setDisable(true);
         
     }
 
     @FXML
     private void handleMIteFileConnectAction(ActionEvent event) {
-        main.showSerialConf();
+        if(mIteFileConnect.getText() == "Disconnect")
+        {
+            main.disconnectSerial();
+        }
+        else
+        {
+            main.showSerialConf();
+        }
     }
     
     @FXML
@@ -60,12 +78,33 @@ public class FXMLMainWindowController implements Initializable {
         
     }
     
-    public void init(AMASPPacketSender mainController) {
-	main = mainController;
+    public void init(AMASPPacketSender mainController) 
+    {	
+        main = mainController;
     }
     
     public void setStatusLabel(String status)
     {
         lbelStatus.setText(status);
+    }
+    
+    public void setConMenuItemText(String text)
+    {
+        mIteFileConnect.setText(text);
+    }
+    
+    public void enableAllFields(boolean enabled)
+    {
+        aPneSendRec.setDisable(!enabled);
+    }
+    
+    public void enableSenderFields(boolean enabled)
+    {
+        aPneSender.setDisable(!enabled);
+    }
+    
+    public void enableReceiverFields(boolean enabled)
+    {
+        aPneReceiver.setDisable(!enabled);
     }
 }
