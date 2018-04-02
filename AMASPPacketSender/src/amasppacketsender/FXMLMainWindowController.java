@@ -15,6 +15,10 @@ import javafx.scene.layout.GridPane;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+
 /**
  *
  * @author delai
@@ -50,6 +54,16 @@ public class FXMLMainWindowController implements Initializable {
     @FXML
     private MenuItem mIteFileConnect;
     
+    @FXML
+    private Spinner <Integer> spinMRPDevId;
+    
+    @FXML
+    private TextField txFdMRPMsg;
+    
+    // Spinner value factory.
+    SpinnerValueFactory<Integer> valueFactory = //
+       new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0);
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -57,12 +71,14 @@ public class FXMLMainWindowController implements Initializable {
         aPneSendRec.setDisable(true);
         aPneSender.setDisable(false);
         aPneReceiver.setDisable(true);
+        spinMRPDevId.setValueFactory(valueFactory);
+        //spinMRPDevId.getEditor().setTextFormatter(value);
         
     }
 
     @FXML
     private void handleMIteFileConnectAction(ActionEvent event) {
-        if(mIteFileConnect.getText() == "Disconnect")
+        if("Disconnect".equals(mIteFileConnect.getText()))
         {
             main.disconnectSerial();
         }
@@ -76,6 +92,12 @@ public class FXMLMainWindowController implements Initializable {
     private void handleMIteFileExitAction(ActionEvent event)
     {
         
+    }
+    
+    @FXML
+    private void handleBtnMRPSendAction(ActionEvent event)
+    {   
+        main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
     }
     
     public void init(AMASPPacketSender mainController) 
@@ -96,6 +118,7 @@ public class FXMLMainWindowController implements Initializable {
     public void enableAllFields(boolean enabled)
     {
         aPneSendRec.setDisable(!enabled);
+        
     }
     
     public void enableSenderFields(boolean enabled)

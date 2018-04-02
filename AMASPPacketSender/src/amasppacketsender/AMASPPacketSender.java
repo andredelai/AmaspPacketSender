@@ -11,20 +11,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import AMASPJava.*;
 
 /**
  *
  * @author delai
  */
 public class AMASPPacketSender extends Application {
+
+    /**
+     * @return the master
+     */
+    public AMASPSerialMaster getMaster() {
+        return master;
+    }
     
     private Stage stage;
     private Stage stage2;
     private SerialPort serialCom;
+    private AMASPSerialMaster master;
     private FXMLMainWindowController mainWindowCtrl;
     private FXMLSerialComController serialComCtrl;
             
@@ -104,8 +114,17 @@ public class AMASPPacketSender extends Application {
         serialCom.setParity(parity);
         serialCom.setNumDataBits(dataBits);
         serialCom.setNumStopBits(stopBits);
-        boolean openPort = serialCom.openPort();
         
+        if(!serialCom.openPort())
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Error to open the serial port. Check if Another device is using the port.");
+            alert.showAndWait();
+            return;
+        }
+        
+        master = new AMASPSerialMaster();
+        getMaster().begin(serialCom);
         
         switch(serialCom.getParity())
         {
@@ -129,7 +148,11 @@ public class AMASPPacketSender extends Application {
     {
         if(serialCom != null)
         {
-            serialCom.closePort();
+            if(serialCom.isOpen())
+            {
+                serialCom.closePort();
+            }
+            
         }
          mainWindowCtrl.setStatusLabel("No connection");
          mainWindowCtrl.setConMenuItemText("Connect");
