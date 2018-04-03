@@ -15,9 +15,11 @@ import javafx.scene.layout.GridPane;
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 /**
  *
@@ -58,12 +60,43 @@ public class FXMLMainWindowController implements Initializable {
     private Spinner <Integer> spinMRPDevId;
     
     @FXML
+    private Spinner <Integer> spinMCEPDevId;
+    
+    @FXML
+    private Spinner <Integer> spinSRPDevId;
+    
+    @FXML
+    private Spinner <Integer> spinSCEPDevId;
+    
+    @FXML
+    private Spinner <Integer> spinSIPDevId;
+    
+    @FXML
+    private Spinner <Integer> spinMCEPErCode;
+    
+    @FXML
+    private Spinner <Integer> spinSCEPErCode;
+    
+    @FXML
+    private Spinner <Integer> spinSIPIntCode;
+    
+    @FXML
     private TextField txFdMRPMsg;
     
-    // Spinner value factory.
-    SpinnerValueFactory<Integer> valueFactory = //
-       new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0);
+    @FXML
+    private RadioButton rBtnMaster;
     
+    @FXML
+    private RadioButton rBtnSlave;
+    
+    @FXML
+    private AnchorPane aPneMaster;
+    
+    @FXML
+    private AnchorPane aPneSlave;
+    
+    @FXML
+    private ToggleGroup masSlvRadGroup;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,8 +104,16 @@ public class FXMLMainWindowController implements Initializable {
         aPneSendRec.setDisable(true);
         aPneSender.setDisable(false);
         aPneReceiver.setDisable(true);
-        spinMRPDevId.setValueFactory(valueFactory);
-        //spinMRPDevId.getEditor().setTextFormatter(value);
+        spinMRPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
+        spinMCEPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
+        spinSRPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
+        spinSIPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
+        spinSCEPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
+        spinMCEPErCode.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        spinSCEPErCode.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        spinSIPIntCode.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 255, 0));
+        
+        
         
     }
 
@@ -87,6 +128,21 @@ public class FXMLMainWindowController implements Initializable {
             main.showSerialConf();
         }
     }
+    
+    @FXML
+    private void handleRBtnMasterAction(ActionEvent event)
+    {
+        aPneMaster.setDisable(false);
+        aPneSlave.setDisable(true);
+    }
+    
+    @FXML
+    private void handleRBtnSlaveAction(ActionEvent event)
+    {
+        aPneMaster.setDisable(true);
+        aPneSlave.setDisable(false);
+    }
+    
     
     @FXML
     private void handleMIteFileExitAction(ActionEvent event)

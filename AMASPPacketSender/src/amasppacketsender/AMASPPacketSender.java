@@ -7,22 +7,30 @@ package amasppacketsender;
 
 import com.fazecast.jSerialComm.SerialPort;
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import AMASPJava.*;
+import AMASPJava.AMASPSerialMaster;
+import AMASPJava.AMASPSerialSlave;
+
 
 /**
  *
  * @author delai
  */
 public class AMASPPacketSender extends Application {
+
+    /**
+     * @return the slave
+     */
+    public AMASPSerialSlave getSlave()
+    {
+        return slave;
+    }
 
     /**
      * @return the master
@@ -35,6 +43,7 @@ public class AMASPPacketSender extends Application {
     private Stage stage2;
     private SerialPort serialCom;
     private AMASPSerialMaster master;
+    private AMASPSerialSlave slave;
     private FXMLMainWindowController mainWindowCtrl;
     private FXMLSerialComController serialComCtrl;
             
@@ -124,7 +133,10 @@ public class AMASPPacketSender extends Application {
         }
         
         master = new AMASPSerialMaster();
-        getMaster().begin(serialCom);
+        master.begin(serialCom);
+        
+        slave = new AMASPSerialSlave();
+        slave.begin(serialCom);
         
         switch(serialCom.getParity())
         {
