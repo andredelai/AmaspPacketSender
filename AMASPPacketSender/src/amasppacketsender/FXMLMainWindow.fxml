@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="600.0" maxWidth="800.0" minHeight="600.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <GridPane layoutX="314.0" layoutY="191.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -99,46 +99,53 @@
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" percentHeight="13.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="38.0" minHeight="10.0" percentHeight="20.0" prefHeight="38.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="99.0" minHeight="10.0" percentHeight="40.0" prefHeight="74.0" vgrow="SOMETIMES" />
+                                              <RowConstraints maxHeight="70.0" minHeight="10.0" percentHeight="40.0" prefHeight="70.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;">
                                                    <children>
-                                                      <Label alignment="CENTER" layoutX="175.0" prefHeight="17.0" prefWidth="50.0" text="MASTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Label alignment="CENTER" layoutX="175.0" prefHeight="17.0" prefWidth="50.0" text="MASTER" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="85.0" prefWidth="400.0" GridPane.rowIndex="1">
+                                                <AnchorPane prefHeight="85.0" prefWidth="400.0" GridPane.rowIndex="2">
                                                    <children>
-                                                      <Label layoutX="14.0" layoutY="29.0" text="Device ID" AnchorPane.leftAnchor="14.0" />
                                                       <Label layoutX="16.0" layoutY="62.0" text="Message" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="16.0" />
                                                       <TextField fx:id="txFdMRPMsg" layoutX="78.0" layoutY="58.0" prefHeight="25.0" prefWidth="321.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="78.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="14.0" prefHeight="17.0" prefWidth="147.0" text="Request Packet (MRP)" AnchorPane.leftAnchor="14.0" />
                                                       <Button fx:id="btnMRPSend" defaultButton="true" layoutX="349.0" layoutY="27.0" mnemonicParsing="false" onAction="#handleBtnMRPSendAction" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Spinner fx:id="spinMRPDevId" editable="true" layoutX="78.0" layoutY="27.0" prefHeight="17.0" prefWidth="95.0" />
-                                                      <CheckBox fx:id="kBoxMRPBinMsg" layoutX="207.0" layoutY="29.0" mnemonicParsing="false" text="Binary Message" />
+                                                      <CheckBox fx:id="kBoxMRPBinMsg" layoutX="237.0" layoutY="9.0" mnemonicParsing="false" text="Binary Message" />
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane prefHeight="49.0" prefWidth="400.0" GridPane.rowIndex="2">
+                                                <AnchorPane prefHeight="49.0" prefWidth="400.0" GridPane.rowIndex="3">
                                                    <children>
-                                                      <Label layoutX="14.0" layoutY="9.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" />
-                                                      <Label layoutX="14.0" layoutY="44.0" text="Device ID" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <Spinner fx:id="spinMCEPDevId" editable="true" layoutX="79.0" layoutY="32.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="79.0" />
-                                                      <Label layoutX="231.0" layoutY="44.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
-                                                      <Spinner fx:id="spinMCEPErCode" editable="true" layoutX="292.0" layoutY="32.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Button fx:id="btnMCEPSend" defaultButton="true" layoutX="348.0" layoutY="5.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="6.0" />
+                                                      <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" />
+                                                      <Label layoutX="14.0" layoutY="38.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
+                                                      <Spinner fx:id="spinMCEPErCode" editable="true" layoutX="130.0" layoutY="34.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="200.0" />
+                                                      <Button fx:id="btnMCEPSend" defaultButton="true" layoutX="347.0" layoutY="32.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="7.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <Label layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="95.0" text="Target Device ID" textFill="WHITE" AnchorPane.leftAnchor="14.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font></Label>
+                                                      <Spinner fx:id="spinMRPDevId" editable="true" layoutX="130.0" layoutY="3.0" prefHeight="25.0" prefWidth="70.0" />
+                                                      <Label fx:id="lbelHexMRPId" layoutX="216.0" layoutY="7.0" prefHeight="17.0" prefWidth="64.0" text="Hex: 000" textFill="WHITE" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="aPneSlave" disable="true" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+                                    <AnchorPane fx:id="aPneSlave" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                        <children>
                                           <GridPane gridLinesVisible="true" layoutX="100.0" layoutY="79.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <columnConstraints>
@@ -146,63 +153,63 @@
                                             </columnConstraints>
                                             <rowConstraints>
                                               <RowConstraints minHeight="10.0" percentHeight="8.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                              <RowConstraints minHeight="10.0" percentHeight="40.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" percentHeight="12.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;">
                                                    <children>
-                                                      <Label alignment="CENTER" layoutX="181.0" layoutY="4.0" prefHeight="17.0" prefWidth="38.0" text="SLAVE" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0">
+                                                      <Label alignment="CENTER" layoutX="181.0" layoutY="4.0" prefHeight="17.0" prefWidth="38.0" text="SLAVE" textFill="WHITE" AnchorPane.bottomAnchor="4.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="4.0">
                                                          <font>
-                                                            <Font name="System Bold" size="12.0" />
+                                                            <Font name="System Bold Italic" size="12.0" />
                                                          </font>
                                                       </Label>
                                                    </children>
                                                 </AnchorPane>
-                                                <AnchorPane fx:id="gPneSlave" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                <AnchorPane fx:id="gPneSlave" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                                    <children>
-                                                      <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Response Packet (SRP)" AnchorPane.leftAnchor="14.0" />
-                                                      <Label layoutX="14.0" layoutY="49.0" text="Device ID" AnchorPane.leftAnchor="14.0" />
                                                       <Button fx:id="btnSRPSend" defaultButton="true" layoutX="349.0" layoutY="45.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Spinner fx:id="spinSRPDevId" editable="true" layoutX="77.0" layoutY="45.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.leftAnchor="77.0" />
                                                       <Label layoutX="16.0" layoutY="71.0" text="Message" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
                                                       <TextField fx:id="txFSRPMsg" layoutX="77.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="5.0" />
-                                                   </children>
-                                                </AnchorPane>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
-                                                   <children>
-                                                      <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" AnchorPane.leftAnchor="14.0" />
-                                                      <Label layoutX="14.0" layoutY="43.0" text="Device ID" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <Spinner fx:id="spinSCEPDevId" editable="true" layoutX="76.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" />
-                                                      <Label layoutX="234.0" layoutY="43.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
-                                                      <Spinner fx:id="spinSCEPErCode" editable="true" layoutX="300.0" layoutY="39.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Button fx:id="btnSCEPSend" defaultButton="true" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Label layoutX="14.0" layoutY="11.0" prefHeight="17.0" prefWidth="147.0" text="Response Packet (SRP)" AnchorPane.leftAnchor="14.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
                                                    <children>
+                                                      <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" AnchorPane.leftAnchor="14.0" />
+                                                      <Label layoutX="14.0" layoutY="42.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
+                                                      <Spinner fx:id="spinSCEPErCode" editable="true" layoutX="130.0" layoutY="30.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="200.0" />
+                                                      <Button fx:id="btnSCEPSend" defaultButton="true" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
+                                                   <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Interrupt Packet (SIP)" AnchorPane.leftAnchor="14.0" />
-                                                      <Label layoutX="16.0" layoutY="40.0" text="Device ID" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <Spinner fx:id="spinSIPIntCode" editable="true" layoutX="300.0" layoutY="36.0" prefHeight="25.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="5.0" />
-                                                      <Label layoutX="200.0" layoutY="40.0" text="Interruption Code" />
-                                                      <Spinner fx:id="spinSIPDevId" editable="true" layoutX="77.0" layoutY="36.0" prefHeight="17.0" prefWidth="95.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" />
+                                                      <Spinner fx:id="spinSIPIntCode" editable="true" layoutX="130.0" layoutY="34.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="200.0" />
+                                                      <Label layoutX="14.0" layoutY="38.0" text="Interruption Code" />
                                                       <Button fx:id="btnSipSend" defaultButton="true" layoutX="348.0" layoutY="11.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="6.0" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="1">
+                                                   <children>
+                                                      <Label layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="110.0" text="Target Device ID" textFill="WHITE" AnchorPane.leftAnchor="14.0">
+                                                         <font>
+                                                            <Font name="System Bold" size="12.0" />
+                                                         </font></Label>
+                                                      <Spinner fx:id="spinSRPDevId" editable="true" layoutX="130.0" layoutY="3.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.leftAnchor="130.0" />
+                                                      <Label fx:id="lbelHexSRPId" layoutX="214.0" layoutY="7.0" prefHeight="17.0" prefWidth="64.0" text="Hex: 000" textFill="WHITE" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
                                           </GridPane>
                                        </children>
                                     </AnchorPane>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: yellow;" GridPane.rowIndex="4">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="4">
                                        <children>
-                                          <TextField fx:id="txFdSentPkt" editable="false" layoutX="-6.0" layoutY="15.0" prefHeight="25.0" prefWidth="318.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="5.0" />
-                                          <Label layoutX="17.0" layoutY="13.0" text="Sent" AnchorPane.leftAnchor="14.0">
-                                             <font>
-                                                <Font name="System Bold" size="12.0" />
-                                             </font>
-                                          </Label>
-                                          <Label layoutX="14.0" layoutY="25.0" text="Packet" AnchorPane.leftAnchor="14.0">
+                                          <TextField fx:id="txFdSentPkt" editable="false" layoutX="13.0" layoutY="24.0" prefHeight="25.0" prefWidth="376.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="11.0" />
+                                          <Label layoutX="14.0" layoutY="-4.0" prefHeight="32.0" prefWidth="70.0" text="Sent Packet" textFill="WHITE" AnchorPane.leftAnchor="14.0">
                                              <font>
                                                 <Font name="System Bold" size="12.0" />
                                              </font>
@@ -231,11 +238,11 @@
                                 </columnConstraints>
                                 <rowConstraints>
                                   <RowConstraints minHeight="10.0" percentHeight="5.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints minHeight="10.0" percentHeight="50.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" percentHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane fx:id="aPneReceiver" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;">
                                        <children>
                                           <Label alignment="CENTER" layoutX="165.0" layoutY="4.0" prefHeight="21.0" prefWidth="70.0" text="RECEIVER" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="4.0">
                                              <font>
@@ -251,13 +258,13 @@
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" percentHeight="13.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;">
                                                    <children>
-                                                      <Label alignment="CENTER" layoutX="52.0" layoutY="4.0" prefHeight="17.0" prefWidth="126.0" style="-fx-background-color: yellow;" text="Last Packet Content" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Label alignment="CENTER" layoutX="52.0" layoutY="4.0" prefHeight="17.0" prefWidth="126.0" style="-fx-background-color: ;" text="Last Packet Content" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
                                                             <Font name="System Bold" size="12.0" />
                                                          </font>
@@ -266,14 +273,14 @@
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                    <children>
-                                                      <TextField fx:id="txFdRecPktType" editable="false" layoutX="14.0" layoutY="33.0" prefHeight="25.0" prefWidth="76.0" />
-                                                      <TextField fx:id="txFdRecDevId" editable="false" layoutX="14.0" layoutY="87.0" prefHeight="25.0" prefWidth="76.0" />
-                                                      <TextField fx:id="txFdRecCodeLen" editable="false" layoutX="14.0" layoutY="147.0" prefHeight="25.0" prefWidth="76.0" />
-                                                      <TextField fx:id="txFdRecMsg" editable="false" layoutX="14.0" layoutY="198.0" prefHeight="25.0" prefWidth="376.0" />
-                                                      <Label layoutX="14.0" layoutY="14.0" text="Packet Type" />
-                                                      <Label layoutX="14.0" layoutY="70.0" text="Device ID" />
-                                                      <Label layoutX="14.0" layoutY="130.0" text="Code / Length" />
-                                                      <Label layoutX="16.0" layoutY="181.0" text="Message" />
+                                                      <TextField fx:id="txFdRecPktType" editable="false" layoutX="14.0" layoutY="29.0" prefHeight="25.0" prefWidth="76.0" AnchorPane.topAnchor="29.0" />
+                                                      <TextField fx:id="txFdRecDevId" editable="false" layoutX="109.0" layoutY="31.0" prefHeight="25.0" prefWidth="76.0" AnchorPane.topAnchor="29.0" />
+                                                      <TextField fx:id="txFdRecCodeLen" editable="false" layoutX="202.0" layoutY="29.0" prefHeight="25.0" prefWidth="76.0" AnchorPane.topAnchor="29.0" />
+                                                      <TextField fx:id="txFdRecMsg" editable="false" layoutX="12.0" layoutY="84.0" prefHeight="25.0" prefWidth="376.0" />
+                                                      <Label layoutX="14.0" layoutY="6.0" text="Packet Type" AnchorPane.topAnchor="6.0" />
+                                                      <Label layoutX="109.0" layoutY="14.0" text="Device ID" AnchorPane.topAnchor="6.0" />
+                                                      <Label layoutX="202.0" layoutY="12.0" text="Code / Length" AnchorPane.topAnchor="6.0" />
+                                                      <Label layoutX="14.0" layoutY="64.0" text="Message" />
                                                    </children>
                                                 </AnchorPane>
                                              </children>
@@ -287,13 +294,13 @@
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                             </columnConstraints>
                                             <rowConstraints>
-                                              <RowConstraints minHeight="10.0" percentHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                              <RowConstraints minHeight="10.0" percentHeight="6.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;">
                                                    <children>
-                                                      <Label alignment="CENTER" prefHeight="21.0" prefWidth="399.0" style="-fx-background-color: yellow;" text="Received Packet History" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                      <Label alignment="CENTER" layoutY="-111.0" prefHeight="137.0" prefWidth="399.0" style="-fx-background-color: ;" text="Received Packet History" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                          <font>
                                                             <Font name="System Bold" size="12.0" />
                                                          </font>
@@ -302,7 +309,7 @@
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                    <children>
-                                                      <Button fx:id="btonRecHistClr" defaultButton="true" layoutX="171.0" layoutY="197.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="CLEAR" AnchorPane.bottomAnchor="14.0" />
+                                                      <Button fx:id="btonRecHistClr" defaultButton="true" layoutX="171.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="CLEAR" AnchorPane.bottomAnchor="11.0" />
                                                       <TextArea fx:id="txArRecPktHist" editable="false" prefHeight="191.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>
