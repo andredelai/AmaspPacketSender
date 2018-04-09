@@ -127,8 +127,8 @@
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" />
                                                       <Label layoutX="14.0" layoutY="38.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
-                                                      <Spinner fx:id="spinMCEPErCode" editable="true" layoutX="130.0" layoutY="34.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="200.0" />
-                                                      <Button fx:id="btnMCEPSend" defaultButton="true" layoutX="347.0" layoutY="32.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="7.0" />
+                                                      <Spinner fx:id="spinMCEPErCode" editable="true" layoutX="130.0" layoutY="32.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="5.0" />
+                                                      <Button fx:id="btnMCEPSend" defaultButton="true" layoutX="347.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleBtnMCEPSendAction" text="SEND" AnchorPane.bottomAnchor="5.0" AnchorPane.rightAnchor="7.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="1">
@@ -170,9 +170,9 @@
                                                 </AnchorPane>
                                                 <AnchorPane fx:id="gPneSlave" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
                                                    <children>
-                                                      <Button fx:id="btnSRPSend" defaultButton="true" layoutX="349.0" layoutY="45.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Button fx:id="btnSRPSend" defaultButton="true" layoutX="349.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleBtnSRPSendAction" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="16.0" layoutY="71.0" text="Message" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="14.0" />
-                                                      <TextField fx:id="txFSRPMsg" layoutX="77.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="5.0" />
+                                                      <TextField fx:id="txFdSRPMsg" layoutX="77.0" layoutY="67.0" prefHeight="25.0" prefWidth="309.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="77.0" AnchorPane.rightAnchor="5.0" />
                                                       <Label layoutX="14.0" layoutY="11.0" prefHeight="17.0" prefWidth="147.0" text="Response Packet (SRP)" AnchorPane.leftAnchor="14.0" />
                                                    </children>
                                                 </AnchorPane>
@@ -180,8 +180,8 @@
                                                    <children>
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Error Packet (CEP)" AnchorPane.leftAnchor="14.0" />
                                                       <Label layoutX="14.0" layoutY="42.0" text="Error Code" AnchorPane.bottomAnchor="9.0" />
-                                                      <Spinner fx:id="spinSCEPErCode" editable="true" layoutX="130.0" layoutY="30.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="13.0" AnchorPane.rightAnchor="200.0" />
-                                                      <Button fx:id="btnSCEPSend" defaultButton="true" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
+                                                      <Spinner fx:id="spinSCEPErCode" editable="true" layoutX="130.0" layoutY="30.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="13.0" />
+                                                      <Button fx:id="btnSCEPSend" defaultButton="true" layoutX="349.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleBtnSCEPSendAction" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="5.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="4">
@@ -189,7 +189,7 @@
                                                       <Label layoutX="14.0" layoutY="6.0" prefHeight="17.0" prefWidth="147.0" text="Interrupt Packet (SIP)" AnchorPane.leftAnchor="14.0" />
                                                       <Spinner fx:id="spinSIPIntCode" editable="true" layoutX="130.0" layoutY="34.0" prefHeight="25.0" prefWidth="70.0" AnchorPane.bottomAnchor="9.0" AnchorPane.rightAnchor="200.0" />
                                                       <Label layoutX="14.0" layoutY="38.0" text="Interruption Code" />
-                                                      <Button fx:id="btnSipSend" defaultButton="true" layoutX="348.0" layoutY="11.0" mnemonicParsing="false" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="6.0" />
+                                                      <Button fx:id="btnSipSend" defaultButton="true" layoutX="348.0" layoutY="11.0" mnemonicParsing="false" onAction="#handleBtnSIPSendAction" text="SEND" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="6.0" />
                                                    </children>
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" GridPane.rowIndex="1">
@@ -242,7 +242,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;">
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: blue;">
                                        <children>
                                           <Label alignment="CENTER" layoutX="165.0" layoutY="4.0" prefHeight="21.0" prefWidth="70.0" text="RECEIVER" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="4.0">
                                              <font>

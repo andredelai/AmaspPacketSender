@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import AMASPJava.AMASPSerialMaster;
 import AMASPJava.AMASPSerialSlave;
+import javafx.application.Platform;
 
 
 /**
@@ -75,6 +76,15 @@ public class AMASPPacketSender extends Application {
         stage.setMinWidth(850);
         stage.setTitle("AMASP Packet Sender 1.0");
         
+        stage.setOnCloseRequest((event) -> 
+        {
+            exitProgram();
+        });
+        
+        
+        
+        
+        
         stage2 = new Stage();
         stage2.setScene(scene2);
         stage2.setMaxHeight(170);
@@ -99,9 +109,13 @@ public class AMASPPacketSender extends Application {
         
     }
     
+    
     public void exitProgram()
     {
-        stage.close();
+        disconnectSerial();
+        Platform.exit();
+        System.exit(0);
+        
     }
     
     public void hideSerialConf()

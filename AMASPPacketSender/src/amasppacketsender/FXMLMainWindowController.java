@@ -69,6 +69,12 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private TextField txFdMRPMsg;
+    
+    @FXML
+    private TextField txFdSRPMsg;
+    
+    @FXML
+    private TextField txFdSentPkt;
 
     @FXML
     private RadioButton rBtnMaster;
@@ -125,6 +131,44 @@ public class FXMLMainWindowController implements Initializable {
         });
     }
 
+    
+    //Event Handlers*
+    
+    @FXML
+    public void handleBtnMRPSendAction (ActionEvent event)
+    {
+        main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
+        txFdSentPkt.setText("<MRP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", txFdMRPMsg.getLength()) + "><" +txFdMRPMsg.getText() + ">" );
+    }
+    
+    @FXML
+    public void handleBtnMCEPSendAction (ActionEvent event)
+    {
+        main.getMaster().sendError(spinMRPDevId.getValue(), spinMCEPErCode.getValue());
+        txFdSentPkt.setText("<CEP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", spinMCEPErCode.getValue()) + ">");
+    }
+    
+    @FXML
+    public void handleBtnSRPSendAction (ActionEvent event)
+    {
+        main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdMRPMsg.getText() , txFdMRPMsg.getLength());
+        txFdSentPkt.setText("<SRP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", txFdSRPMsg.getLength()) + "><" +txFdSRPMsg.getText() + ">" );
+    }
+    
+    @FXML
+    public void handleBtnSCEPSendAction (ActionEvent event)
+    {
+        main.getSlave().sendError(spinSRPDevId.getValue(), spinSCEPErCode.getValue());
+        txFdSentPkt.setText("<CEP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSCEPErCode.getValue()) + ">");
+    }
+    
+    @FXML
+    public void handleBtnSIPSendAction (ActionEvent event)
+    {
+        main.getSlave().sendInterruption(spinSRPDevId.getValue(), spinSIPIntCode.getValue());
+        txFdSentPkt.setText("<SIP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSIPIntCode.getValue()) + ">");
+    }
+    
     @FXML
     private void handleMIteFileConnectAction(ActionEvent event) {
         if ("Disconnect".equals(mIteFileConnect.getText())) {
@@ -148,17 +192,8 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private void handleMIteFileExitAction(ActionEvent event) {
-
-    }
-
-    @FXML
-    private void handleBtnMRPSendAction(ActionEvent event) {
-        main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
-    }
-
-    @FXML
-    private void handleSpinMRPSendAction(InputMethodEvent event) {
-        lbelHexMRPId.setText(Integer.toHexString(spinMRPDevId.getValue()));
+        main.exitProgram();
+        
     }
 
     public void init(AMASPPacketSender mainController) {
