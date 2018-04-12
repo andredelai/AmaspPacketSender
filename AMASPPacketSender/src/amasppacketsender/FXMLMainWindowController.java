@@ -151,7 +151,7 @@ public class FXMLMainWindowController implements Initializable {
     @FXML
     public void handleBtnSRPSendAction (ActionEvent event)
     {
-        main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdMRPMsg.getText() , txFdMRPMsg.getLength());
+        main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdSRPMsg.getText() , txFdSRPMsg.getLength());
         txFdSentPkt.setText("<SRP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", txFdSRPMsg.getLength()) + "><" +txFdSRPMsg.getText() + ">" );
     }
     
