@@ -315,7 +315,7 @@
                                                 </AnchorPane>
                                                 <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                                                    <children>
-                                                      <Button fx:id="btonRecHistClr" defaultButton="true" layoutX="171.0" layoutY="301.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="57.0" text="CLEAR" AnchorPane.bottomAnchor="11.0" />
+                                                      <Button fx:id="btonRecHistClr" defaultButton="true" layoutX="171.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleBtonRecHistClr" prefHeight="25.0" prefWidth="57.0" text="CLEAR" AnchorPane.bottomAnchor="11.0" />
                                                       <TextArea fx:id="txArRecPktHist" editable="false" prefHeight="191.0" prefWidth="200.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                                    </children>
                                                 </AnchorPane>

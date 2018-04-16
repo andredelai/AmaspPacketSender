@@ -5,23 +5,27 @@
  */
 package amasppacketsender;
 
-import java.awt.event.InputMethodEvent;
+import AMASPJava.AMASPSerial;
+import AMASPJava.AMASPSerial.PacketType;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import java.awt.event.MouseEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.input.ContextMenuEvent;
+
 
 /**
  *
@@ -75,6 +79,21 @@ public class FXMLMainWindowController implements Initializable {
     
     @FXML
     private TextField txFdSentPkt;
+    
+    @FXML
+    private TextField txFdRecPktType;
+    
+    @FXML
+    private TextField txFdRecDevId;
+    
+    @FXML
+    private TextField txFdRecCodeLen;
+    
+    @FXML
+    private TextField txFdRecMsg;
+    
+    @FXML
+    private TextArea txArRecPktHist;
 
     @FXML
     private RadioButton rBtnMaster;
@@ -97,6 +116,9 @@ public class FXMLMainWindowController implements Initializable {
     @FXML
     private Label lbelHexSRPId;
 
+    AMASPSerial.PacketData packetData;
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -195,6 +217,19 @@ public class FXMLMainWindowController implements Initializable {
         main.exitProgram();
         
     }
+    
+    @FXML
+    private void handleBtonRecHistClr(ActionEvent event)
+    {
+        packetData = main.getMaster().readPacket();
+                if (packetData.getType() != PacketType.Timeout )
+                {
+                    txFdRecPktType.setText(packetData.getType().toString());
+                    txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
+                    txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
+                    txFdRecCodeLen.setText(Arrays.toString(packetData.getMessage()));                   
+                }
+    }
 
     public void init(AMASPPacketSender mainController) {
         main = mainController;
@@ -211,11 +246,41 @@ public class FXMLMainWindowController implements Initializable {
     public void enableAllFields(boolean enabled) {
         aPneSendRec.setDisable(!enabled);
         handleRBtnMasterAction(null);
+        //updateRxFields();
 
     }
 
     public void enableSenderFields(boolean enabled) {
         aPneSender.setDisable(!enabled);
     }
-
+    
+    public void updateRxFields(){
+    new Thread() {
+         
+        @Override
+        public void run() {
+            
+            while(true)
+            {
+                //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
+                packetData = main.getMaster().readPacket();
+                if (packetData.getType() != PacketType.Timeout )
+                {
+                    txFdRecPktType.setText(packetData.getType().toString());
+                    txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
+                    txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
+                    txFdRecCodeLen.setText(Arrays.toString(packetData.getMessage()));                   
+                
+                    
+                }
+                try {
+                    Thread.sleep(20);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        }
+    }.start();
+}
 }
