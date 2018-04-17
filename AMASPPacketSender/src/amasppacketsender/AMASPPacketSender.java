@@ -82,9 +82,6 @@ public class AMASPPacketSender extends Application {
         });
         
         
-        
-        
-        
         stage2 = new Stage();
         stage2.setScene(scene2);
         stage2.setMaxHeight(170);
