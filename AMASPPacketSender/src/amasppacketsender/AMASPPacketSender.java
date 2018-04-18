@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import AMASPJava.AMASPSerialMaster;
 import AMASPJava.AMASPSerialSlave;
+import static com.fazecast.jSerialComm.SerialPort.TIMEOUT_READ_BLOCKING;
 import javafx.application.Platform;
 
 
@@ -134,6 +135,7 @@ public class AMASPPacketSender extends Application {
         serialCom.setParity(parity);
         serialCom.setNumDataBits(dataBits);
         serialCom.setNumStopBits(stopBits);
+        serialCom.setComPortTimeouts( TIMEOUT_READ_BLOCKING, 1000, 500);
         
         if(!serialCom.openPort())
         {
@@ -171,11 +173,7 @@ public class AMASPPacketSender extends Application {
     {
         if(serialCom != null)
         {
-            if(serialCom.isOpen())
-            {
-                serialCom.closePort();
-            }
-            
+            serialCom.closePort();         
         }
          mainWindowCtrl.setStatusLabel("No connection");
          mainWindowCtrl.setConMenuItemText("Connect");

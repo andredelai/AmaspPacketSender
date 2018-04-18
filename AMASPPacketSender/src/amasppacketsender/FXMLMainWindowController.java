@@ -25,7 +25,9 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 
 /**
  *
@@ -34,6 +36,8 @@ import javafx.scene.control.ToggleGroup;
 public class FXMLMainWindowController implements Initializable {
 
     private AMASPPacketSender main;
+    private Thread tReceiver;
+    private volatile boolean tReceivRunning = true;
 
     @FXML
     private AnchorPane aPneSendRec;
@@ -58,10 +62,10 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private Spinner<Integer> spinMRPDevId;
-    
+
     @FXML
     private Spinner<Integer> spinSRPDevId;
-    
+
     @FXML
     private Spinner<Integer> spinMCEPErCode;
 
@@ -73,25 +77,25 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private TextField txFdMRPMsg;
-    
+
     @FXML
     private TextField txFdSRPMsg;
-    
+
     @FXML
     private TextField txFdSentPkt;
-    
+
     @FXML
     private TextField txFdRecPktType;
-    
+
     @FXML
     private TextField txFdRecDevId;
-    
+
     @FXML
     private TextField txFdRecCodeLen;
-    
+
     @FXML
     private TextField txFdRecMsg;
-    
+
     @FXML
     private TextArea txArRecPktHist;
 
@@ -112,13 +116,13 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private Label lbelHexMRPId;
-    
+
     @FXML
     private Label lbelHexSRPId;
+    
 
     AMASPSerial.PacketData packetData;
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -133,17 +137,17 @@ public class FXMLMainWindowController implements Initializable {
             {
                 lbelHexMRPId.setText(String.format("Hex: %03X", (spinMRPDevId.getValue())));
             }
-        });      
-        
+        });
+
         spinSRPDevId.valueProperty().addListener((obs, oldValue, newValue) -> {
             {
                 lbelHexSRPId.setText(String.format("Hex: %03X", (spinSRPDevId.getValue())));
             }
-        });      
-        
+        });
+
         spinMRPDevId.getEditor().setOnKeyPressed(event -> {
             switch (event.getCode()) {
-                case UP:                                    
+                case UP:
                     spinMRPDevId.increment(1);
                     break;
                 case DOWN:
@@ -151,52 +155,47 @@ public class FXMLMainWindowController implements Initializable {
                     break;
             }
         });
+        
     }
 
-    
     //Event Handlers*
-    
     @FXML
-    public void handleBtnMRPSendAction (ActionEvent event)
-    {
+    public void handleBtnMRPSendAction(ActionEvent event) {
         main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
-        txFdSentPkt.setText("<MRP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", txFdMRPMsg.getLength()) + "><" +txFdMRPMsg.getText() + ">" );
+        txFdSentPkt.setText("<MRP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", txFdMRPMsg.getLength()) + "><" + txFdMRPMsg.getText() + ">");
     }
-    
+
     @FXML
-    public void handleBtnMCEPSendAction (ActionEvent event)
-    {
+    public void handleBtnMCEPSendAction(ActionEvent event) {
         main.getMaster().sendError(spinMRPDevId.getValue(), spinMCEPErCode.getValue());
         txFdSentPkt.setText("<CEP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", spinMCEPErCode.getValue()) + ">");
     }
-    
+
     @FXML
-    public void handleBtnSRPSendAction (ActionEvent event)
-    {
-        main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdSRPMsg.getText() , txFdSRPMsg.getLength());
-        txFdSentPkt.setText("<SRP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", txFdSRPMsg.getLength()) + "><" +txFdSRPMsg.getText() + ">" );
+    public void handleBtnSRPSendAction(ActionEvent event) {
+        main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdSRPMsg.getText(), txFdSRPMsg.getLength());
+        txFdSentPkt.setText("<SRP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", txFdSRPMsg.getLength()) + "><" + txFdSRPMsg.getText() + ">");
     }
-    
+
     @FXML
-    public void handleBtnSCEPSendAction (ActionEvent event)
-    {
+    public void handleBtnSCEPSendAction(ActionEvent event) {
         main.getSlave().sendError(spinSRPDevId.getValue(), spinSCEPErCode.getValue());
         txFdSentPkt.setText("<CEP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSCEPErCode.getValue()) + ">");
     }
-    
+
     @FXML
-    public void handleBtnSIPSendAction (ActionEvent event)
-    {
+    public void handleBtnSIPSendAction(ActionEvent event) {
         main.getSlave().sendInterruption(spinSRPDevId.getValue(), spinSIPIntCode.getValue());
         txFdSentPkt.setText("<SIP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSIPIntCode.getValue()) + ">");
     }
-    
+
     @FXML
     private void handleMIteFileConnectAction(ActionEvent event) {
         if ("Disconnect".equals(mIteFileConnect.getText())) {
+            receiverOn(false);
             main.disconnectSerial();
         } else {
-            main.showSerialConf();
+            main.showSerialConf();            
         }
     }
 
@@ -214,21 +213,14 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private void handleMIteFileExitAction(ActionEvent event) {
+        receiverOn(false);
         main.exitProgram();
-        
+
     }
-    
+
     @FXML
-    private void handleBtonRecHistClr(ActionEvent event)
-    {
-        packetData = main.getMaster().readPacket();
-                if (packetData.getType() != PacketType.Timeout )
-                {
-                    txFdRecPktType.setText(packetData.getType().toString());
-                    txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
-                    txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
-                    txFdRecCodeLen.setText(Arrays.toString(packetData.getMessage()));                   
-                }
+    private void handleBtonRecHistClr(ActionEvent event) {
+        txArRecPktHist.clear();
     }
 
     public void init(AMASPPacketSender mainController) {
@@ -246,41 +238,68 @@ public class FXMLMainWindowController implements Initializable {
     public void enableAllFields(boolean enabled) {
         aPneSendRec.setDisable(!enabled);
         handleRBtnMasterAction(null);
-        //updateRxFields();
-
+        if(enabled == true)
+        {
+            receiverOn(true);
+        }
+        
     }
 
     public void enableSenderFields(boolean enabled) {
         aPneSender.setDisable(!enabled);
     }
-    
-    public void updateRxFields(){
-    new Thread() {
-         
-        @Override
-        public void run() {
-            
-            while(true)
+
+    @SuppressWarnings("empty-statement")
+    private void receiverOn(boolean status)
+    {
+        if(status == true)
+        {
+            if(tReceiver != null)
             {
-                //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
-                packetData = main.getMaster().readPacket();
-                if (packetData.getType() != PacketType.Timeout )
-                {
-                    txFdRecPktType.setText(packetData.getType().toString());
-                    txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
-                    txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
-                    txFdRecCodeLen.setText(Arrays.toString(packetData.getMessage()));                   
-                
-                    
-                }
-                try {
-                    Thread.sleep(20);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            tReceivRunning = false; //signalize to stop the receiver thread
+            while(tReceiver.isAlive()); //wait until the thread dies
+            tReceivRunning = true;
             }
             
+            tReceiver = new Thread() {
+
+            @Override
+            public void run() {
+
+                String strAux;
+                while (tReceivRunning) {
+                    //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
+                    packetData = main.getMaster().readPacket();
+                    if (packetData.getType() != PacketType.Timeout) {
+                        txFdRecPktType.setText(packetData.getType().toString());
+                        txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
+                        txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
+                        txFdRecMsg.setText(Arrays.toString(packetData.getMessage()));
+
+                        strAux = "<" + packetData.getType().toString() + ">";
+                        strAux += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
+                        strAux += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
+                        if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) {
+                            strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
+                        }
+                        txArRecPktHist.setText(txArRecPktHist.getText() + strAux + "\r\n");
+
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        };
+              tReceiver.start();
         }
-    }.start();
-}
+        else
+        {
+            tReceivRunning = false; //signalize to stop the receiver thread
+            while(tReceiver.isAlive()); //wait until the thread dies
+            tReceivRunning = true;
+        }
+    }
 }
