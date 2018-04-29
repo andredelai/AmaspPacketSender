@@ -110,6 +110,7 @@ public class AMASPPacketSender extends Application {
     
     public void exitProgram()
     {
+        mainWindowCtrl.receiverOn(false);
         disconnectSerial();
         Platform.exit();
         System.exit(0);
@@ -135,7 +136,7 @@ public class AMASPPacketSender extends Application {
         serialCom.setParity(parity);
         serialCom.setNumDataBits(dataBits);
         serialCom.setNumStopBits(stopBits);
-        serialCom.setComPortTimeouts( TIMEOUT_READ_BLOCKING, 1000, 500);
+        serialCom.setComPortTimeouts( TIMEOUT_READ_BLOCKING, 1000, 1000);
         
         if(!serialCom.openPort())
         {

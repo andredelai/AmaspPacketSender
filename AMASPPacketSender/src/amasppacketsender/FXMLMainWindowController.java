@@ -97,7 +97,7 @@ public class FXMLMainWindowController implements Initializable {
     private TextField txFdRecMsg;
 
     @FXML
-    private TextArea txArRecPktHist;
+    volatile private TextArea txArRecPktHist;
 
     @FXML
     private RadioButton rBtnMaster;
@@ -250,7 +250,7 @@ public class FXMLMainWindowController implements Initializable {
     }
 
     @SuppressWarnings("empty-statement")
-    private void receiverOn(boolean status)
+    public void receiverOn(boolean status)
     {
         if(status == true)
         {
@@ -266,27 +266,38 @@ public class FXMLMainWindowController implements Initializable {
             @Override
             public void run() {
 
-                String strAux;
+                String strAux1, strAux2;
                 while (tReceivRunning) {
                     //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
                     packetData = main.getMaster().readPacket();
                     if (packetData.getType() != PacketType.Timeout) {
                         txFdRecPktType.setText(packetData.getType().toString());
-                        txFdRecDevId.setText(String.format("%03X", packetData.getDeviceId()));
-                        txFdRecCodeLen.setText(String.format("%03X", packetData.getCodeLength()));
-                        txFdRecMsg.setText(Arrays.toString(packetData.getMessage()));
-
-                        strAux = "<" + packetData.getType().toString() + ">";
-                        strAux += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
-                        strAux += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
-                        if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) {
-                            strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
+                        txFdRecDevId.setText(String.format("%03d", packetData.getDeviceId()));
+                        txFdRecCodeLen.setText(String.format("%03d", packetData.getCodeLength()));
+                        strAux1 = "";
+                        for(int i = 0; i < packetData.getCodeLength(); i++)
+                        {
+                            strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
                         }
-                        txArRecPktHist.setText(txArRecPktHist.getText() + strAux + "\r\n");
+                        txFdRecMsg.setText(strAux1);
+
+                        strAux2 = "<" + packetData.getType().toString() + ">";
+                        strAux2 += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
+                        strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
+                        if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) 
+                        {
+                            //strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
+                            strAux2 += "<" + strAux1 + ">";
+                        }
+                        
+                        if(txArRecPktHist.getLength() < 4000 )
+                        {
+                            txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
+                        }
 
                     }
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(10);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
                     }
