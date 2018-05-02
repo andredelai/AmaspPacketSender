@@ -119,7 +119,6 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private Label lbelHexSRPId;
-    
 
     AMASPSerial.PacketData packetData;
 
@@ -155,7 +154,7 @@ public class FXMLMainWindowController implements Initializable {
                     break;
             }
         });
-        
+
     }
 
     //Event Handlers*
@@ -195,7 +194,7 @@ public class FXMLMainWindowController implements Initializable {
             receiverOn(false);
             main.disconnectSerial();
         } else {
-            main.showSerialConf();            
+            main.showSerialConf();
         }
     }
 
@@ -238,11 +237,14 @@ public class FXMLMainWindowController implements Initializable {
     public void enableAllFields(boolean enabled) {
         aPneSendRec.setDisable(!enabled);
         handleRBtnMasterAction(null);
-        if(enabled == true)
-        {
+        if (enabled == true) {
             receiverOn(true);
         }
-        
+        txArRecPktHist.clear();
+        txFdRecPktType.clear();
+        txFdRecDevId.clear();
+        txFdRecCodeLen.clear();
+        txFdRecMsg.clear();
     }
 
     public void enableSenderFields(boolean enabled) {
@@ -250,67 +252,61 @@ public class FXMLMainWindowController implements Initializable {
     }
 
     @SuppressWarnings("empty-statement")
-    public void receiverOn(boolean status)
-    {
-        if(status == true)
-        {
-            if(tReceiver != null)
-            {
-            tReceivRunning = false; //signalize to stop the receiver thread
-            while(tReceiver.isAlive()); //wait until the thread dies
-            tReceivRunning = true;
+    public void receiverOn(boolean status) {
+        if (status == true) {
+            if (tReceiver != null) {
+                tReceivRunning = false; //signalize to stop the receiver thread
+                while (tReceiver.isAlive()); //wait until the thread dies
+                tReceivRunning = true;
             }
-            
+
             tReceiver = new Thread() {
 
-            @Override
-            public void run() {
+                @Override
+                public void run() {
 
-                String strAux1, strAux2;
-                while (tReceivRunning) {
-                    //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
-                    packetData = main.getMaster().readPacket();
-                    if (packetData.getType() != PacketType.Timeout) {
-                        txFdRecPktType.setText(packetData.getType().toString());
-                        txFdRecDevId.setText(String.format("%03d", packetData.getDeviceId()));
-                        txFdRecCodeLen.setText(String.format("%03d", packetData.getCodeLength()));
-                        strAux1 = "";
-                        for(int i = 0; i < packetData.getCodeLength(); i++)
-                        {
-                            strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
-                        }
-                        txFdRecMsg.setText(strAux1);
+                    String strAux1, strAux2;
+                    while (tReceivRunning) {
+                        //txArRecPktHist.setText(txArRecPktHist.getText() + "check!\r\n");
+                        packetData = main.getMaster().readPacket();
+                        if (packetData.getType() != PacketType.Timeout) {
+                            txFdRecPktType.setText(packetData.getType().toString());
+                            txFdRecDevId.setText(String.format("%03d", packetData.getDeviceId()));
+                            txFdRecCodeLen.setText(String.format("%03d", packetData.getCodeLength()));
+                            strAux1 = "";
+                            for (int i = 0; i < packetData.getCodeLength(); i++) {
+                                strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
+                            }
+                            txFdRecMsg.setText(strAux1);
 
-                        strAux2 = "<" + packetData.getType().toString() + ">";
-                        strAux2 += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
-                        strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
-                        if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) 
-                        {
-                            //strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
-                            strAux2 += "<" + strAux1 + ">";
-                        }
-                        
-                        if(txArRecPktHist.getLength() < 4000 )
-                        {
-                            txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
-                        }
+                            strAux2 = "<" + packetData.getType().toString() + ">";
+                            strAux2 += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
+                            strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
+                            if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) {
+                                //strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
+                                strAux2 += "<" + strAux1 + ">";
+                            }
 
-                    }
-                    try {
-                        Thread.sleep(10);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                            if (txArRecPktHist.getLength() < 4000) {
+                                txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
+                            }
+
+                        }
+                        try {
+                            Thread.sleep(10);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(FXMLMainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 }
+            };
+            tReceiver.start();
+        } else {
+            if (tReceiver != null) {
+                tReceivRunning = false; //signalize to stop the receiver thread
+                while (tReceiver.isAlive()); //wait until the thread dies
+                tReceivRunning = true;
             }
-        };
-              tReceiver.start();
-        }
-        else
-        {
-            tReceivRunning = false; //signalize to stop the receiver thread
-            while(tReceiver.isAlive()); //wait until the thread dies
-            tReceivRunning = true;
         }
     }
 }

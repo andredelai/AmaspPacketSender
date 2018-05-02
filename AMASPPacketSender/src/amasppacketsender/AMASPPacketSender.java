@@ -119,6 +119,7 @@ public class AMASPPacketSender extends Application {
     
     public void hideSerialConf()
     {
+        
         stage2.hide();
     }
     
@@ -136,7 +137,7 @@ public class AMASPPacketSender extends Application {
         serialCom.setParity(parity);
         serialCom.setNumDataBits(dataBits);
         serialCom.setNumStopBits(stopBits);
-        serialCom.setComPortTimeouts( TIMEOUT_READ_BLOCKING, 1000, 1000);
+        serialCom.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1000, 0);
         
         if(!serialCom.openPort())
         {
