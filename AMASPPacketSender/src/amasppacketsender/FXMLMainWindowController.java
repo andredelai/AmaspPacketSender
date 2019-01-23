@@ -8,13 +8,15 @@ package amasppacketsender;
 import AMASPJava.AMASPSerial;
 import AMASPJava.AMASPSerial.PacketType;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.control.Label;
@@ -25,9 +27,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
+
 
 /**
  *
@@ -119,12 +119,23 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private Label lbelHexSRPId;
+    
+    @FXML
+    private ComboBox<String> cboxErrorCheck;
 
     AMASPSerial.PacketData packetData;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
+        
+        ObservableList <String> ErroCheckAlgList = FXCollections.observableArrayList();
+        
+        ErroCheckAlgList.addAll("None", "XOR8", "Checksum16", "LRC16", "Fletcher16", "CRC16");
+        
+        cboxErrorCheck.setItems(ErroCheckAlgList);
+        cboxErrorCheck.setValue("None");
+        
         aPneSendRec.setDisable(true);
         aPneSender.setDisable(false);
         spinMRPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
@@ -160,6 +171,7 @@ public class FXMLMainWindowController implements Initializable {
     //Event Handlers*
     @FXML
     public void handleBtnMRPSendAction(ActionEvent event) {
+        
         main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
         txFdSentPkt.setText("<MRP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", txFdMRPMsg.getLength()) + "><" + txFdMRPMsg.getText() + ">");
     }
@@ -221,7 +233,39 @@ public class FXMLMainWindowController implements Initializable {
     private void handleBtonRecHistClr(ActionEvent event) {
         txArRecPktHist.clear();
     }
-
+    
+    @FXML
+    private void handleCboxErChkAction(ActionEvent event)
+    {
+        switch (cboxErrorCheck.getValue())
+        {
+            case "None":
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.None);
+                break;
+            
+            case "XOR8":
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.XOR8);
+                    
+            case "Checksum16":
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.checksum16);
+                break;
+                
+            case "LRC16":
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.LRC16);
+                break;
+                
+            case "Fletcher16": 
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.fletcher16);
+                break;
+                
+            case "CRC16":
+                main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.CRC16);
+                break;
+        }
+        
+        
+    }
+    
     public void init(AMASPPacketSender mainController) {
         main = mainController;
     }
