@@ -245,6 +245,7 @@ public class FXMLMainWindowController implements Initializable {
             
             case "XOR8":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.XOR8);
+                break;
                     
             case "Checksum16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.checksum16);
@@ -262,8 +263,7 @@ public class FXMLMainWindowController implements Initializable {
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.CRC16);
                 break;
         }
-        
-        
+             
     }
     
     public void init(AMASPPacketSender mainController) {
