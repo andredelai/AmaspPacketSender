@@ -27,6 +27,7 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.InputMethodEvent;
 
 
 /**
@@ -169,9 +170,12 @@ public class FXMLMainWindowController implements Initializable {
     }
 
     //Event Handlers*
+           
     @FXML
     public void handleBtnMRPSendAction(ActionEvent event) {
         
+        spinMRPDevId.increment();
+        spinMRPDevId.decrement();
         main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
         txFdSentPkt.setText("<MRP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", txFdMRPMsg.getLength()) + "><" + txFdMRPMsg.getText() + ">");
     }
@@ -184,6 +188,9 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     public void handleBtnSRPSendAction(ActionEvent event) {
+        
+        spinSRPDevId.increment();
+        spinSRPDevId.decrement();
         main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdSRPMsg.getText(), txFdSRPMsg.getLength());
         txFdSentPkt.setText("<SRP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", txFdSRPMsg.getLength()) + "><" + txFdSRPMsg.getText() + ">");
     }
