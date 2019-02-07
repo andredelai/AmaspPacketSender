@@ -29,7 +29,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.InputMethodEvent;
 
-
 /**
  *
  * @author delai
@@ -96,6 +95,9 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private TextField txFdRecMsg;
+    
+    @FXML
+    private TextField txFdRecECA;
 
     @FXML
     volatile private TextArea txArRecPktHist;
@@ -120,7 +122,7 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private Label lbelHexSRPId;
-    
+
     @FXML
     private ComboBox<String> cboxErrorCheck;
 
@@ -129,14 +131,13 @@ public class FXMLMainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-        
-        ObservableList <String> ErroCheckAlgList = FXCollections.observableArrayList();
-        
+        ObservableList<String> ErroCheckAlgList = FXCollections.observableArrayList();
+
         ErroCheckAlgList.addAll("None", "XOR8", "Checksum16", "LRC16", "Fletcher16", "CRC16");
-        
+
         cboxErrorCheck.setItems(ErroCheckAlgList);
         cboxErrorCheck.setValue("None");
-        
+
         aPneSendRec.setDisable(true);
         aPneSender.setDisable(false);
         spinMRPDevId.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 4095, 0));
@@ -170,10 +171,9 @@ public class FXMLMainWindowController implements Initializable {
     }
 
     //Event Handlers*
-           
     @FXML
     public void handleBtnMRPSendAction(ActionEvent event) {
-        
+
         spinMRPDevId.increment();
         spinMRPDevId.decrement();
         main.getMaster().sendRequest(spinMRPDevId.getValue(), txFdMRPMsg.getText(), txFdMRPMsg.getLength());
@@ -188,7 +188,7 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     public void handleBtnSRPSendAction(ActionEvent event) {
-        
+
         spinSRPDevId.increment();
         spinSRPDevId.decrement();
         main.getSlave().sendResponse(spinSRPDevId.getValue(), txFdSRPMsg.getText(), txFdSRPMsg.getLength());
@@ -240,39 +240,37 @@ public class FXMLMainWindowController implements Initializable {
     private void handleBtonRecHistClr(ActionEvent event) {
         txArRecPktHist.clear();
     }
-    
+
     @FXML
-    private void handleCboxErChkAction(ActionEvent event)
-    {
-        switch (cboxErrorCheck.getValue())
-        {
+    private void handleCboxErChkAction(ActionEvent event) {
+        switch (cboxErrorCheck.getValue()) {
             case "None":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.None);
                 break;
-            
+
             case "XOR8":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.XOR8);
                 break;
-                    
+
             case "Checksum16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.checksum16);
                 break;
-                
+
             case "LRC16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.LRC16);
                 break;
-                
-            case "Fletcher16": 
+
+            case "Fletcher16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.fletcher16);
                 break;
-                
+
             case "CRC16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.CRC16);
                 break;
         }
-             
+
     }
-    
+
     public void init(AMASPPacketSender mainController) {
         main = mainController;
     }
@@ -324,6 +322,7 @@ public class FXMLMainWindowController implements Initializable {
                             txFdRecPktType.setText(packetData.getType().toString());
                             txFdRecDevId.setText(String.format("%03d", packetData.getDeviceId()));
                             txFdRecCodeLen.setText(String.format("%03d", packetData.getCodeLength()));
+                            txFdRecECA.setText(packetData.getErrorCheckType().toString());
                             strAux1 = "";
                             for (int i = 0; i < packetData.getCodeLength(); i++) {
                                 strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
@@ -331,6 +330,7 @@ public class FXMLMainWindowController implements Initializable {
                             txFdRecMsg.setText(strAux1);
 
                             strAux2 = "<" + packetData.getType().toString() + ">";
+                            strAux2 += "<" + packetData.getErrorCheckType().getValue() + ">";
                             strAux2 += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
                             strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
                             if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) {
