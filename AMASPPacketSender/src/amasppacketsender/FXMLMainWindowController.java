@@ -338,8 +338,12 @@ public class FXMLMainWindowController implements Initializable {
                                 strAux2 += "<" + strAux1 + ">";
                             }
 
-                            if (txArRecPktHist.getLength() < 4000) {
+                            if (txArRecPktHist.getLength() < 10000) {
                                 txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
+                            }
+                            else
+                            {
+                               txArRecPktHist.clear();
                             }
 
                         }
