@@ -95,7 +95,7 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private TextField txFdRecMsg;
-    
+
     @FXML
     private TextField txFdRecECA;
 
@@ -324,26 +324,31 @@ public class FXMLMainWindowController implements Initializable {
                             txFdRecCodeLen.setText(String.format("%03d", packetData.getCodeLength()));
                             txFdRecECA.setText(packetData.getErrorCheckType().toString());
                             strAux1 = "";
-                            for (int i = 0; i < packetData.getCodeLength(); i++) {
-                                strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
-                            }
-                            txFdRecMsg.setText(strAux1);
 
                             strAux2 = "<" + packetData.getType().toString() + ">";
                             strAux2 += "<" + packetData.getErrorCheckType().getValue() + ">";
                             strAux2 += "<" + String.format("%03X", packetData.getDeviceId()) + ">";
-                            strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
-                            if (packetData.getType() != PacketType.CEP && packetData.getType() != PacketType.SIP) {
-                                //strAux += "<" + Arrays.toString(packetData.getMessage()) + ">";
+                            
+                            if ((packetData.getType() == PacketType.MRP) || (packetData.getType() == PacketType.SRP)) {
+                                
+                                strAux2 += "<" + String.format("%03X", packetData.getCodeLength()) + ">";
+                                
+                                for (int i = 0; i < packetData.getCodeLength(); i++) {
+                                    strAux1 += String.format("%02X", packetData.getMessage()[i]) + " ";
+                                }
+                                txFdRecMsg.setText(strAux1);
                                 strAux2 += "<" + strAux1 + ">";
+                            }
+                            else
+                            {
+                                strAux2 += "<" + String.format("%02X", packetData.getCodeLength()) + ">";
                             }
 
                             if (txArRecPktHist.getLength() < 10000) {
                                 txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
-                            }
-                            else
-                            {
-                               txArRecPktHist.clear();
+                            } else {
+                                txArRecPktHist.clear();
+                                txArRecPktHist.setText(txArRecPktHist.getText() + strAux2 + "\r\n");
                             }
 
                         }
