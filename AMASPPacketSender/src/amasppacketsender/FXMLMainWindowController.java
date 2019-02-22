@@ -182,6 +182,10 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     public void handleBtnMCEPSendAction(ActionEvent event) {
+        spinMRPDevId.increment();
+        spinMRPDevId.decrement();
+        spinMCEPErCode.increment();
+        spinMCEPErCode.decrement();
         main.getMaster().sendError(spinMRPDevId.getValue(), spinMCEPErCode.getValue());
         txFdSentPkt.setText("<CEP><" + String.format("%03X", spinMRPDevId.getValue()) + "><" + String.format("%02X", spinMCEPErCode.getValue()) + ">");
     }
@@ -197,12 +201,20 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     public void handleBtnSCEPSendAction(ActionEvent event) {
+        spinSRPDevId.increment();
+        spinSRPDevId.decrement();
+        spinSCEPErCode.increment();
+        spinSCEPErCode.decrement();
         main.getSlave().sendError(spinSRPDevId.getValue(), spinSCEPErCode.getValue());
         txFdSentPkt.setText("<CEP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSCEPErCode.getValue()) + ">");
     }
 
     @FXML
-    public void handleBtnSIPSendAction(ActionEvent event) {
+    public void handleBtnSIPSendAction(ActionEvent event) {   
+        spinSRPDevId.increment();
+        spinSRPDevId.decrement();
+        spinSIPIntCode.increment();
+        spinSIPIntCode.decrement();
         main.getSlave().sendInterruption(spinSRPDevId.getValue(), spinSIPIntCode.getValue());
         txFdSentPkt.setText("<SIP><" + String.format("%03X", spinSRPDevId.getValue()) + "><" + String.format("%02X", spinSIPIntCode.getValue()) + ">");
     }
@@ -246,26 +258,32 @@ public class FXMLMainWindowController implements Initializable {
         switch (cboxErrorCheck.getValue()) {
             case "None":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.None);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.None);
                 break;
 
             case "XOR8":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.XOR8);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.XOR8);
                 break;
 
             case "Checksum16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.checksum16);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.checksum16);
                 break;
 
             case "LRC16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.LRC16);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.LRC16);
                 break;
 
             case "Fletcher16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.fletcher16);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.fletcher16);
                 break;
 
             case "CRC16":
                 main.getMaster().setErrorCheckType(AMASPSerial.ErrorCheckType.CRC16);
+                main.getSlave().setErrorCheckType(AMASPSerial.ErrorCheckType.CRC16);
                 break;
         }
 
