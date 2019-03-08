@@ -1,8 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+/*    
+  Created by Andre L. Delai.
+
+  This is a free software; you can redistribute it and/or
+  modify it under the terms of the GNU Lesser General Public
+  License as published by the Free Software Foundation; either
+  version 2.1 of the License, or (at your option) any later version.
+
+  This library is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+*/
 package amasppacketsender;
 
 import AMASPJava.AMASPSerial;
@@ -59,6 +71,9 @@ public class FXMLMainWindowController implements Initializable {
 
     @FXML
     private MenuItem mIteFileConnect;
+    
+    @FXML
+    private MenuItem mIteAboutPktSend;
 
     @FXML
     private Spinner<Integer> spinMRPDevId;
@@ -124,6 +139,15 @@ public class FXMLMainWindowController implements Initializable {
     private Label lbelHexSRPId;
 
     @FXML
+    private Label lbelHexMRPEc;
+    
+    @FXML
+    private Label lbelHexSRPEc;
+    
+    @FXML
+    private Label lbelHexSRPIc;
+    
+    @FXML
     private ComboBox<String> cboxErrorCheck;
 
     AMASPSerial.PacketData packetData;
@@ -156,7 +180,25 @@ public class FXMLMainWindowController implements Initializable {
                 lbelHexSRPId.setText(String.format("Hex: %03X", (spinSRPDevId.getValue())));
             }
         });
-
+        
+        spinMCEPErCode.valueProperty().addListener((obs, oldValue, newValue) -> {
+            {
+                lbelHexMRPEc.setText(String.format("Hex: %02X", (spinMCEPErCode.getValue())));
+            }
+        });
+        
+        spinSCEPErCode.valueProperty().addListener((obs, oldValue, newValue) -> {
+            {
+                lbelHexSRPEc.setText(String.format("Hex: %02X", (spinSCEPErCode.getValue())));
+            }
+        });
+        
+        spinSIPIntCode.valueProperty().addListener((obs, oldValue, newValue) -> {
+            {
+                lbelHexSRPIc.setText(String.format("Hex: %02X", (spinSIPIntCode.getValue())));
+            }
+        });
+        
         spinMRPDevId.getEditor().setOnKeyPressed(event -> {
             switch (event.getCode()) {
                 case UP:
@@ -228,6 +270,12 @@ public class FXMLMainWindowController implements Initializable {
             main.showSerialConf();
         }
     }
+    
+    @FXML
+    private void handleMIteAboutAction(ActionEvent event) {
+        main.showAbout();
+    }
+    
 
     @FXML
     private void handleRBtnMasterAction(ActionEvent event) {
