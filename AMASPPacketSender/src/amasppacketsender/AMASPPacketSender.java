@@ -95,7 +95,7 @@ public class AMASPPacketSender extends Application {
         stage.setMaxWidth(850);
         stage.setMinHeight(650);
         stage.setMinWidth(850);
-        stage.setTitle("AMASP Packet Sender 1.1");
+        stage.setTitle("AMASP Packet Sender 1.2.0");
         
         stage.setOnCloseRequest((event) -> 
         {
